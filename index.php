@@ -32,8 +32,7 @@ $course = $DB->get_record('course', array('id'=>$id), '*', MUST_EXIST);
 require_course_login($course, true);
 $PAGE->set_pagelayout('incourse');
 
-//add_to_log($course->id, 'groupselect', 'view all', "index.php?id=$course->id", '');
-\mod_groupselect\event\course_module_instance_list_viewed::create(array('context' => context_course::instance($course->id)))->trigger();
+add_to_log($course->id, 'groupselect', 'view all', "index.php?id=$course->id", '');
 
 $strgroupselect  = get_string('modulename', 'mod_groupselect');
 $strgroupselects = get_string('modulenameplural', 'mod_groupselect');
@@ -55,7 +54,7 @@ if (!$groupselects = get_all_instances_in_course('groupselect', $course)) {
 
 $usesections = course_format_uses_sections($course->format);
 if ($usesections) {
-    $sections = get_fast_modinfo($course)->get_section_info_all();
+    $sections = get_all_sections($course->id);
 }
 
 $table = new html_table();
