@@ -53,9 +53,6 @@ if (!$groupselects = get_all_instances_in_course('groupselect', $course)) {
 }
 
 $usesections = course_format_uses_sections($course->format);
-if ($usesections) {
-    $sections = get_all_sections($course->id);
-}
 
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_index';
@@ -76,7 +73,7 @@ foreach ($groupselects as $groupselect) {
         $printsection = '';
         if ($groupselect->section !== $currentsection) {
             if ($groupselect->section) {
-                $printsection = get_section_name($course, $sections[$groupselect->section]);
+                $printsection = get_section_name($course, $groupselect->section);
             }
             if ($currentsection !== '') {
                 $table->data[] = 'hr';
